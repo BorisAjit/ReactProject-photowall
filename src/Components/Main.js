@@ -1,21 +1,29 @@
 import React, {Component} from "react";
 import Title from './Title';
 import PhotoWall from "./PhotoWall";
+import AddPhoto from "./AddPhoto";
 
 class Main extends Component{
     constructor(){
       super();
       console.log("Constructor method");
       this.state = {
-        posts : []
+        posts : [],
+        screen : 'photos' //'photos' or 'add photos'
       }
       this.removePhoto = this.removePhoto.bind(this);
+      this.navigate = this.navigate.bind(this);
     }
     removePhoto(postRemoved){
       console.log(postRemoved.description);
       this.setState((state)=>({
         posts: state.posts.filter(post => post !== postRemoved)
       }))
+    }
+    navigate(){
+      this.setState({
+        screen:'add photos'
+      })
     }
     fetchPhotos(){
       return [{
@@ -35,13 +43,22 @@ class Main extends Component{
     }
 
     render(){
-      console.log("render method");
-      return (
-        <div>
-          <Title title = 'PhotoWall'/>
-          <PhotoWall posts = {this.state.posts} onRemovePhoto={this.removePhoto}/>
-        </div>
-      )
+      return <div>{
+          this.state.screen === 'photos' && (
+          <div>
+            <Title title = 'PhotoWall'/>
+            <PhotoWall posts = {this.state.posts} onRemovePhoto={this.removePhoto} onNavigate = {this.navigate}/>
+          </div>
+          )
+        }
+        {
+          this.state.screen === 'add photos' && (
+          <div>
+            <AddPhoto/>
+          </div>
+          )
+        }
+    </div>
     }
 
     componentDidMount(){

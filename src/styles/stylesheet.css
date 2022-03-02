@@ -55,3 +55,12 @@ h1{
     padding: 5px;
 
 }
+
+.add-btn{
+    display: table;
+    margin: 20px auto;
+    padding: 40px;
+    background: url(../icons/plus-flat.svg) center no-repeat;
+    background-size: contain;
+    border: none;
+}
